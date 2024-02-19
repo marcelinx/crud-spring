@@ -1,5 +1,6 @@
 package com.marcelinx.crudspring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -44,6 +45,7 @@ public class Course {
   @org.hibernate.validator.constraints.Length(max = 10)
   @Pattern(regexp = "Ativo|Inativo")
   @Column(length = 10, nullable = false)
+  @JsonIgnore
   private String status = "Ativo";
 
 }
