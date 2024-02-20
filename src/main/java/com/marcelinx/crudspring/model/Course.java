@@ -1,51 +1,50 @@
 package com.marcelinx.crudspring.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.marcelinx.crudspring.enums.Category;
+import com.marcelinx.crudspring.enums.Status;
+import com.marcelinx.crudspring.enums.converter.CategoryConverter;
+import com.marcelinx.crudspring.enums.converter.StatusConverter;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
-@SuppressWarnings("deprecation")
 @Data
 @Entity
+// @Table(name = "cursos")
 @SQLDelete(sql = "UPDATE Course SET status = 'Inativo' WHERE id = ?")
 @Where(clause = "status = 'Ativo'")
 public class Course {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @JsonProperty("_id")
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonProperty("_id")
+    private Long id;
 
-  @NotBlank
-  @NotNull
-  @org.hibernate.validator.constraints.Length(min = 5, max = 100)
-  @Column(length = 100, nullable = false)
-  private String name;
+    @NotBlank
+    @NotNull
+    @Length(min = 5, max = 100)
+    @Column(length = 100, nullable = false)
+    private String name;
 
-  @NotNull
-  @org.hibernate.validator.constraints.Length(max = 10)
-  @Pattern(regexp = "Back-end|Front-end")
-  @Column(length = 10, nullable = false)
-  private String category;
+    @NotNull
+    @Column(length = 10, nullable = false)
+    @Convert(converter = CategoryConverter.class)
+    private Category category;
 
-  @NotNull
-  @org.hibernate.validator.constraints.Length(max = 10)
-  @Pattern(regexp = "Ativo|Inativo")
-  @Column(length = 10, nullable = false)
-  @JsonIgnore
-  private String status = "Ativo";
-
+    @NotNull
+    @Column(length = 10, nullable = false)
+    @Convert(converter = StatusConverter.class)
+    private Status status = Status.ACTIVE;
 }
