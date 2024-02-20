@@ -1,7 +1,6 @@
 package com.marcelinx.crudspring.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -10,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.marcelinx.crudspring.DTO.courseDTO;
 import com.marcelinx.crudspring.DTO.mapper.CourseMapper;
+import com.marcelinx.crudspring.enums.Category;
 import com.marcelinx.crudspring.exception.RecordNotFoundException;
-import com.marcelinx.crudspring.model.Course;
 import com.marcelinx.crudspring.repository.CourseRepository;
 
 import jakarta.validation.Valid;
@@ -50,7 +49,7 @@ public class CourseService {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     recordFound.setName(course.name());
-                    recordFound.setCategory(course.category());
+                    recordFound.setCategory(Category.FRONT_END);
                     return courseMapper.toDTO(courseRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }
