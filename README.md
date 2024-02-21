@@ -66,3 +66,7 @@ O modelo `Course` possui os seguintes atributos:
 ## Contribuindo
 
 Para contribuir com este projeto, por favor, crie um fork do repositório, faça suas alterações e envie um Pull Request.
+---
+<img width="878" alt="Screen Shot 2024-02-21 at 14 53 07" src="https://github.com/marcelinx/crud-spring/assets/81206036/9f2fa417-9559-461f-a30f-84fe4d2b312e">
+
+
